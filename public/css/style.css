@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#wrap {
+  min-height: 100%;
+}
+#header {
+  height: 40px;
+  background-color: #ddd;
+}
+#connected {
+  float: right;
+  margin: 10px 30px 10px 10px;
+}
+#main {
+  overflow: auto;
+  padding-bottom: 40px;
+  background-color: #fff;
+}
+#form {
+  margin: 20px;
+}
+#footer {
+  position: relative;
+  padding: 10px;
+  height: 40px;
+  margin-top: -40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
+  background-color: #ddd;
+}
