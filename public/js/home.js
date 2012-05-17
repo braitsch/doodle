@@ -1,19 +1,15 @@
 
 $(document).ready(function() {
 	
-	var n = 0;
-	var socket = io.connect();
-	socket.on('cnt', function (data) {
-		n = data.val;
-		$('#out').val(n);
-	});	
-	
-	socket.on('num-connections', function (data) {
-		$('#connected').text(data.val + ' People Currently Connected');
+	var socket = io.connect();	
+	socket.on('status', function (data) {
+		$('#out').val(data.ct);
+		$('#connected').text(data.nc + ' People Currently Connected');
 	});		
 	
 	$('#my-btn').click(function(){
-		socket.emit('cnt', { val: ++n });
+		var n = Number($('#out').val()) + 1;
+		socket.emit('cnt', { val: n });
 	})
 	
 });
