@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-	var home = require(app.settings.root + '/routes/home');
-	app.get('/', home.index);
+	var cnvs = require(app.settings.root + '/routes/canvas');
+	app.get('/', cnvs.index);
 
 };

@@ -83,7 +83,7 @@ function updateRecord(o, n)
 		collection.findOne(o, function(e, d){
 			dispatch('record-updated', d);		
 		})
-	})	
+	})
 }
 
 function log(m) { if (debug) console.log(m); }

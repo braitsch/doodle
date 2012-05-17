@@ -1,7 +1,7 @@
 
 var io;
 var db = require('./db.js');
-var numConnections = 0;
+var connections = {};
 
 module.exports = function(app) 
 {
@@ -13,28 +13,19 @@ module.exports = function(app)
 
 function onSocketConnect(socket)
 {
-	numConnections++; 
-// add listeners //
-	socket.on('cnt', onSocketData);
-	socket.on('disconnect', onSocketDisconnect);
-// dispatch current state //	
-	dispatchStatus();
-}
-
-function onSocketDisconnect(socket)
-{
-	numConnections--;
-	dispatchStatus();
-}
-
-function onSocketData(data)
-{
-	db.updateRecord({id:1}, {counter:data.val});
-}
-
-function dispatchStatus()
-{
-	db.readRecord({id:1});
+	socket.on('draw-data', function(data){
+// append this socket's id so we know who is talking //
+		data.id = socket.id;
+		socket.broadcast.emit('draw-data', data);		
+	});
+	socket.on('disconnect', function(){
+// dispatch connections //
+		delete connections[socket.id];
+		io.sockets.emit('status', { connections:connections });
+	});
+// dispatch connections //
+	connections[socket.id] = {};
+	io.sockets.emit('status', { connections:connections });
 }
 
 // database stuff //
@@ -46,20 +37,20 @@ db.addListener('record-updated', onRecordUpdated);
 
 function onDatabaseConnected()
 {
-	db.setCollection('table-1');
+	db.setCollection('connections');
 }
 
 function onCollectionSet()
 {
-	db.listCollection();	
+//	db.listCollection();	
 }
 
 function onRecordRead(o)
 {
-	io.sockets.emit('status', { ct: o.counter, nc:numConnections });		
+//	io.sockets.emit('status', { nc:numConnections });		
 }
 
 function onRecordUpdated(o)
 {
-	io.sockets.emit('status', { ct: o.counter, nc:numConnections });		
+//	io.sockets.emit('status', { nc:numConnections });		
 }

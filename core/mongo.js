@@ -2,7 +2,7 @@
 module.exports = function(onReady){
 	var mongo = require('mongodb');
 	var server = new mongo.Server('localhost', 27017, {auto_reconnect: true});
-	var db = new mongo.Db('my-first-db', server);
+	var db = new mongo.Db('my-mongo-database', server);
 
 	db.open(function(e, db) {
 	  	if (e) {
