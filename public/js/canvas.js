@@ -9,13 +9,13 @@ $(document).ready(function() {
 function iniDrawing()
 {
 	stage = new JS3('cnvs');
-	stage.setSize(800, 400)
 	stage.background = '#CCC';
+	stage.autoSize = true;
 	stage.interactive = true;
 	stage.drawClean = false;
 		
 	stage.down = start;
-	stage.enter = start;JS3.js		
+	stage.enter = start;
 	stage.up = stop;
 	stage.leave = stop;
 	
