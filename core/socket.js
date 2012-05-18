@@ -7,9 +7,10 @@ module.exports = function(app)
 {
 	io = require('socket.io').listen(app);
 	io.set('log level', 1);	
-  	io.set('transports', ['xhr-polling']);
-  	io.set("polling duration", 10);
-//	io.set('transports', [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+// 	settings required for heroku & socket.io	
+//  io.set('transports', ['xhr-polling']);
+// 	io.set("polling duration", 10);
+	io.set('transports', [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 	io.sockets.on('connection', onSocketConnect);
 }
 
