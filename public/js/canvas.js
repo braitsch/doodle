@@ -1,4 +1,5 @@
 
+var gui = new gui();
 var stage, socket, connections = {};
 
 $(document).ready(function() {
@@ -13,6 +14,7 @@ function iniDrawing()
 	stage.autoSize = true;
 	stage.interactive = true;
 	stage.drawClean = false;
+	stage.windowTitle = '!!!';
 		
 	stage.down = start;
 	stage.enter = start;
@@ -20,7 +22,6 @@ function iniDrawing()
 	stage.leave = stop;
 	
     var x, y;
-	var c = JS3.getRandomColor();
 	function start(e)
 	{
 		if (stage.mousePressed){
@@ -37,9 +38,9 @@ function iniDrawing()
 	
 	function onMouseMove(e)
 	{
-	    stage.drawLine({x1:x, y1:y, x2:e.x, y2:e.y, color:c});
+	    stage.drawLine({x1:x, y1:y, x2:e.x, y2:e.y, color:gui.color, strokeWidth:gui.stroke});
 	    x = e.x; y = e.y;
-		socket.emit('draw-data', { x: e.x, y:e.y, color:c});
+		socket.emit('draw-data', { x: e.x, y:e.y, color:gui.color, strokeWidth:gui.stroke});
 		window.document.body.style.cursor = 'crosshair';
 	}	
 }
@@ -55,7 +56,7 @@ function initSocket()
 	socket.on('draw-data', function (data) {
 		var k = connections[data.id];
 		if (k.x && k.y){
-			stage.drawLine({x1:k.x, y1:k.y, x2:data.x, y2:data.y, color:data.color});			
+			stage.drawLine({x1:k.x, y1:k.y, x2:data.x, y2:data.y, color:data.color, strokeWidth:data.strokeWidth});			
 		}
 		k.x = data.x; k.y = data.y;
 	});

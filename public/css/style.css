@@ -19,15 +19,17 @@ body {
 }
 #connected {
   float: right;
-  margin: 10px 30px 10px 10px;
+  margin: 11px 30px 0 10px;
 }
 #main {
   overflow: auto;
   padding-bottom: 40px;
   background-color: #fff;
 }
-#form {
-  margin: 20px;
+#gui {
+  position: absolute;
+  top: 40px;
+  right: 0;
 }
 #footer {
   position: relative;
