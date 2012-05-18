@@ -1,10 +1,20 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.5.8"
-    , "stylus": ">= 0.0.1"
-    , "jade": ">= 0.0.1"
+    "name": "node-socket",
+    "version": "0.0.1",    
+    "description": "Simple Node.js Socket Server",
+    "author": {
+        "name": "Stephen Braitsch",
+        "email": "stephen@quietless.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/braitsch/node-socket.git"
+    },
+    "private": true,
+    "dependencies": {
+      "express": "2.5.8",
+      "stylus": ">= 0.0.1",
+      "jade": ">= 0.0.1",
+      "mongodb": ">= 0.1.0"
   }
 }
