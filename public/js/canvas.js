@@ -4,7 +4,7 @@ var stage, socket, connections = {};
 
 $(document).ready(function() {
 	iniDrawing();
-	initSocket();
+	initSocket();	
 });
 
 function iniDrawing()
@@ -15,6 +15,7 @@ function iniDrawing()
 	stage.interactive = true;
 	stage.drawClean = false;
 	stage.windowTitle = '!!!';
+	stage.autoSizeOffset = {height:-80};
 		
 	stage.down = start;
 	stage.enter = start;
