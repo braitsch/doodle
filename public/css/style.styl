@@ -3,12 +3,16 @@ footer_height = 40px
 html, body 
     margin: 0
     padding: 0
+    height: 100%
     -webkit-user-select: none
     -khtml-user-select: none
     -moz-user-select: none
     -ms-user-select: none
     -o-user-select: none
     user-select: none
+    
+#wrap 
+    min-height: 100%
 
 #header
     height:40px 
@@ -18,19 +22,21 @@ html, body
     float:right
     margin:11px 30px 0 10px
     
+#main 
+    overflow: auto
+    padding-bottom: footer_height
+    background-color: white
+
 #gui
     position: absolute
     top 40px
-    right 0    
-    
-#main 
-    overflow: auto
-    background-color: white
-    
+    right 0
+
 #footer
     position: relative
     height: footer_height
-    background-color: #ddd
+    margin-top: - footer_height
+    background-color:#ddd  
     
 #credit
     font-size: .9em    
@@ -38,4 +44,4 @@ html, body
     padding-top: 10px
     
 #nfnd
-    padding:20px    
+    padding:20px
