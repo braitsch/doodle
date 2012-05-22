@@ -1,17 +1,18 @@
 
 /**
- * Node.js Socket Server
+ * Node.js Doodle Server
  * Author :: Stephen Braitsch
  */
 
-var express = require('express');
-var app = module.exports = express.createServer();
-app.settings.root = __dirname;
+module.exports = function(sio){
 
-require('./core/env.js')(app, express);
-require('./core/router.js')(app);
-require('./core/socket.js')(app);
+	var exp = require('express');
+	var app = exp.createServer();
+	app.settings.root = __dirname;
 
-app.listen(process.env.PORT || 8080, function(){
-	console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-});
+	require('./core/env.js')(app, exp);
+	require('./core/router.js')(app);
+	require('./core/socket.js')(sio);
+	
+	return app;
+}

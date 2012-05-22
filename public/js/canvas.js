@@ -49,7 +49,7 @@ function iniDrawing()
 function initSocket()
 {
 	socket = io.connect();
-	socket.on('status', function (data) {
+	socket.on('doodle-status', function (data) {
 		connections = data.connections;
 		var i=0; for (p in connections) i++;
 		$('#connected').text(i + ' People Currently Connected');

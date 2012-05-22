@@ -1,37 +1,62 @@
 
-var io;
-var db = require('./db.js');
-var connections = {};
+//var db = require('./db.js');
 
-module.exports = function(app) 
+var io, clients = {};
+var appName = 'doodle';
+
+module.exports = function(sio) { io = sio; io.on('connection', registerSocket); };
+module.exports.init = function(){};
+
+// --- events and callbacks unique to this application //
+
+function addEventHandlers(socket)
 {
-	io = require('socket.io').listen(app);
-	io.set('log level', 1);	
-// 	settings required for heroku & socket.io	
-//  io.set('transports', ['xhr-polling']);
-// 	io.set("polling duration", 10);
-	io.set('transports', [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-	io.sockets.on('connection', onSocketConnect);
+	socket.on('draw-data', function(data) { onCustomEvent(socket, data); });		
+}
+ 
+function onCustomEvent(socket, data)
+{
+// append this socket's id so we know who is talking //
+	data.id = socket.id;
+	socket.broadcast.emit('draw-data', data);
+}
+
+
+// --- general connection methods used by all applications --- //
+
+function registerSocket(socket)
+{
+// listen for connections events //
+	onSocketConnect(socket);
+	socket.on('disconnect', function() { onSocketDisconnect(socket); });
 }
 
 function onSocketConnect(socket)
 {
-	socket.on('draw-data', function(data){
-// append this socket's id so we know who is talking //
-		data.id = socket.id;
-		socket.broadcast.emit('draw-data', data);		
-	});
-	socket.on('disconnect', function(){
-// dispatch connections //
-		delete connections[socket.id];
-		io.sockets.emit('status', { connections:connections });
-	});
-// dispatch connections //
-	connections[socket.id] = {};
-	io.sockets.emit('status', { connections:connections });
+	if (socket.handshake.headers.host.indexOf(appName) != -1){
+		console.log('connecting ---', socket.handshake.headers.host);
+		addEventHandlers(socket);
+		// dispatch to clients //		
+		clients[socket.id] = {};
+		io.sockets.emit(appName + '-status', { connections:clients });
+	}
 }
 
-// database stuff //
+function onSocketDisconnect(socket)
+{	
+	if (socket.handshake.headers.host.indexOf(appName) != -1){
+		console.log('disconnecting --- ', socket.handshake.headers.host, socket.id)
+		// dispatch to clients //
+		delete clients[socket.id];
+		io.sockets.emit(appName + '-status', { connections:clients });
+	}
+}
+
+
+
+// database stuff -- todo //
+
+return;
 
 db.addListener('database-connected', onDatabaseConnected);
 db.addListener('collection-set', onCollectionSet);
@@ -40,7 +65,7 @@ db.addListener('record-updated', onRecordUpdated);
 
 function onDatabaseConnected()
 {
-	db.setCollection('connections');
+	db.setCollection('clients');
 }
 
 function onCollectionSet()
