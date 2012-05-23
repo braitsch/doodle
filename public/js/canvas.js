@@ -10,13 +10,11 @@ $(document).ready(function() {
 function iniDrawing()
 {
 	stage = new JS3('cnvs');
-	stage.background = '#CCC';
-	stage.autoSize = true;
 	stage.interactive = true;
 	stage.drawClean = false;
 	stage.windowTitle = '!!!';
-	stage.autoSizeOffset = {height:-80};
-		
+	stage.radial = ['#ffffff', '#CCCCCC'];
+	
 	stage.down = start;
 	stage.enter = start;
 	stage.up = stop;

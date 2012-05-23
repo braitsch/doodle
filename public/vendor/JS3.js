@@ -1,8 +1,8 @@
 
 /**
  * JS3 - A Drawing & Tweening API for the JavaScript Canvas
- * Version : 0.3.0
- * Release Date : May 18 2012
+ * Version : 0.3.1
+ * Release Date : May 22 2012
  * Documentation : http://js3.quietless.com/
  *
  * Copyright 2012 Stephen Braitsch :: @braitsch
@@ -22,16 +22,14 @@ function JS3(cnvs)
 		var _children		= [];
 		var _graphics		= [];
 		var _runners		= [];
-		var _tweens			= [];
-		var _autoSize		= true;				
-		var _drawClean		= true;		
+		var _tweens			= [];			
+		var _drawClean		= true;				
 		var _background		= '#ffffff';
 		var _winTitle		= 'My Canvas';
 		var _clickInt		= 0;
 		var _stageEnter		= false;
 		var _interactive	= false;
-		var _autoSizeOffset = {};
-		var _downObj, _overObj, _dragObj;
+		var _downObj, _overObj, _dragObj, _radial, _linear;
 	
 	// public getters & setters //
 	
@@ -48,10 +46,10 @@ function JS3(cnvs)
 			while( e != null ) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
 			return {x:x, y:y};}});
     	Object.defineProperty(this, "drawClean",		{set: function(b) { _drawClean = b;}});
-    	Object.defineProperty(this, "background",		{set: function(b) { _background = b; drawBackground();}});
+    	Object.defineProperty(this, "radial",			{set: function(a) { _radial = a; _linear = _background = undefined; drawBackground();}});
+    	Object.defineProperty(this, "linear",			{set: function(a) { _linear = a; _radial = _background = undefined; drawBackground();}});
+    	Object.defineProperty(this, "background",		{set: function(n) { _background = n; _linear = _radial = undefined; drawBackground();}});
     	Object.defineProperty(this, "windowTitle",		{set: function(s) { _winTitle = s;}});
-		Object.defineProperty(this, "autoSize",			{set: function(b) { _autoSize = b; onWRS();}});
-		Object.defineProperty(this, "autoSizeOffset", 	{set: function(o) { _autoSizeOffset = o; onWRS();}});
 		JS3setStageEvents(this);
 	
 	// display list management //	
@@ -99,18 +97,7 @@ function JS3(cnvs)
 			while(_tweens.length) {_tweens[0] = null; _tweens.splice(0, 1);}
 			while(_runners.length) {_runners[0] = null; _runners.splice(0, 1);}
 			_tweens = []; _runners = []; this.clear();
-		}
-		this.setSize = function(w, h){
-	// setting _canvas width & height force clears the canvas, so let's cache the canvas //
-  			var cnvs = document.createElement('canvas');
-    		var cntx = cnvs.getContext('2d');
-			cnvs.width = w; cnvs.height = h;
-			cntx.fillStyle = _background;
-			cntx.fillRect(0, 0, w, h);
-    		cntx.drawImage(_canvas, 0, 0);
-			_canvas.width = w; _canvas.height = h;
-			_context.drawImage(cnvs, 0, 0);
-		}			
+		}		
 		this.save = function(){
 	// save canvas as a png //		
 			var img = _canvas.toDataURL('image/png');
@@ -242,7 +229,7 @@ function JS3(cnvs)
 			_context.mx = e.pageX - oX; _context.my = e.pageY - oY;
 		}
 		
-	// window focus & resize events //
+	// window focus events //
 	
 		var onWFI = function()
 		{
@@ -253,24 +240,31 @@ function JS3(cnvs)
 		{
 			if (_root._windowFocusOut) _root._windowFocusOut(new JS3Event('focusOut', _root, _root));
 		}		
-						
-		var onWRS = function()
-		{
-			if (_autoSize) {
-				var w = _canvas.parentNode.style.width || window.innerWidth;
-				var h = _canvas.parentNode.style.height || window.innerHeight;
-				if (typeof w === 'string' && w.indexOf('px') != -1) w = w.substr(0, w.indexOf('px'));
-				if (typeof h === 'string' && h.indexOf('px') != -1) h = h.substr(0, h.indexOf('px'));
-				_root.setSize(w + (_autoSizeOffset.width || 0) , h + (_autoSizeOffset.height || 0));
-			}
-		}
-		window.onfocus = onWFI; window.onblur = onWFO; window.onresize = onWRS;		
+
+		window.onfocus = onWFI; window.onblur = onWFO;
 				
 	// private instance methods //
 		
 		var drawBackground = function(){
-			_context.fillStyle = _background;
+			if (_radial){
+				radialBkgd();
+			}	else if (_linear){
+				linearBkgd();
+			}	else{
+				solidBkgd();
+			}
 			_context.fillRect(0, 0, _canvas.width, _canvas.height);			
+		}
+		var solidBkgd = function(){
+			_context.fillStyle = _background || '#ffffff';
+		}
+		var radialBkgd = function(){
+			var g = _context.createRadialGradient(_canvas.width/2, _canvas.height/2, 0, _canvas.width/2, _canvas.height/2, _canvas.width/2);
+			_context.fillStyle = JS3.drawGradient(_radial, g);
+		}
+		var linearBkgd = function(){
+			var g = _context.createLinearGradient(0, 0, _canvas.width, 0);
+			_context.fillStyle = JS3.drawGradient(_linear, g);
 		}
 		var initTween = function(t){
 			t.start = Date.now(); _tweens.push(t)	
@@ -280,7 +274,7 @@ function JS3(cnvs)
 		}
 		var render = function(){
 		// render display list objects //				
-			i = 0; while ( i < _children.length ) { var k = _children[i]; k.update(k); i++;}			
+			i = 0; while ( i < _children.length ) { var k = _children[i]; k.update(k); i++;}
 		// render non-persistent graphics //
 			while ( _graphics.length ) { var k = _graphics[0]; k.update(k); _graphics.splice(0, 1); k = null;}
 		}
@@ -366,7 +360,7 @@ JS3.drawCirc = function(o){
 	o.stage.bezierCurveTo(-o.cx, -a2, -a1, -o.cy, 0, -o.cy);
 	o.stage.bezierCurveTo(a1, -o.cy, o.cx, -a2, o.cx, 0);
 	o.stage.bezierCurveTo(o.cx, a2, a1, o.cy, 0, o.cy);
-	o.stage.bezierCurveTo(-a1, o.cy, -o.cx, a2, -o.cx, 0);
+	o.stage.bezierCurveTo(-a1, o.cy, -o.cx, a2, -o.cx, 0);	
 	JS3.drawShape(o);	
 }
 JS3.drawTri = function(o){
@@ -441,6 +435,7 @@ JS3.drawText = function(o){
 	JS3.drawShape(o);	
 }		
 JS3.fill = function(o){
+	if (o._gradient) o.drawGradient(o)
 	o.stage.globalAlpha = o.alpha * o.fillAlpha;			
     o.stage.fillStyle = o.color || o.fillColor;
 	o instanceof JS3Text ? o.stage.fillText(o.text, -o.cx, -o.cy) : o.stage.fill();
@@ -473,8 +468,59 @@ JS3.drawShape = function(o){
 	if (o.stroke) JS3.stroke(o);
 	o.stage.restore();	
 }
+JS3.drawRadial = function(o)
+{
+	var g = o.stage.createRadialGradient(0, 0, 0, 0, 0, o.size/2);
+	o.color = JS3.drawGradient(o._gradient, g);
+}
+JS3.drawLinear = function(o)
+{
+	var g = o.stage.createLinearGradient(-o.width/2, 0, o.width/2, 0);
+	o.color = JS3.drawGradient(o._gradient, g);	
+}
+JS3.drawGradient = function(colors, g)
+{
+	var n = colors.length;
+	if (n == 1){ return colors[0] }
+	for (var i=0; i < n; i++) {
+		var c = colors[i]; g.addColorStop((1/(n-1))*i, JS3.ToRGB(c));
+	};
+	return g;
+}
 JS3.copyProps = function(o1, o2){ 
 	for (var k in o1) o2[k] = o1[k]; o1 = null;
+}
+JS3.ToRGB = function(h)
+{
+	h = JS3.getHexFromName(h);
+	if (h.charAt(0)=="#") h = h.substring(1,7);
+	var r = parseInt(h.substring(0,2),16);
+	var g = parseInt(h.substring(2,4),16);
+	var b = parseInt(h.substring(4,6),16);
+	return 'rgba('+r+','+g+','+b+', 1)';
+}
+JS3.getHexFromName = function(h)
+{
+	switch(h){
+		case 'aqua' : return '#00FFFF';
+		case 'black' : return '#000000';
+		case 'blue' : return '#0000FF';
+		case 'fuchsia' : return '#FF00FF';
+		case 'gray' : return '#000000';
+		case 'grey' : return '#808080';
+		case 'green' : return '#808080';
+		case 'lime' : return '#00FF00';
+		case 'maroon' : return '#800000';
+		case 'navy' : return '#000080';
+		case 'olive' : return '#808000';
+		case 'purple' : return '#800080';
+		case 'red' : return '#ff0000';
+		case 'silver' : return '#C0C0C0';
+		case 'teal' : return '#008080';
+		case 'white' : return '#ffffff';
+		case 'yellow' : return '#FFFF00';
+	}
+	return h;
 }
 
 // --- rob penners's easing equations from http://www.robertpenner.com/easing --- //
@@ -607,6 +653,8 @@ function JS3getBaseProps(o)
 											set: function(n) { o._width=n; o.pts=[];}});
 	Object.defineProperty(o, "height",	{	get: function() { return o._height;},
 											set: function(n) { o._height=n; o.pts=[];}});
+	Object.defineProperty(o, "linear",	{	set: function(a) { o._gradient=a; o.drawGradient = JS3.drawLinear}});											
+	Object.defineProperty(o, "radial",	{	set: function(a) { o._gradient=a; o.drawGradient = JS3.drawRadial}});										
 	o.x=o.y=o.rotation=0; o._size=25; o.fillColor='#ddd'; o.strokeColor='#ccc'; o.fill=o.stroke=true;o.alpha=o.scaleX=o.scaleY=o.fillAlpha=o.strokeAlpha=1; o.strokeWidth=2;
 	JS3setObjEvents(o);
 }
