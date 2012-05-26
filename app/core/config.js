@@ -8,6 +8,6 @@ module.exports = function(app, exp) {
 		app.use(exp.methodOverride());
 		app.use(require('stylus').middleware({ src: app.root + '/app' }));	
 		app.use(exp.static(app.root + '/app'));
-	});	
+	});
 	
 }
