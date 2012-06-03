@@ -9,16 +9,12 @@ module.exports = function(){
 	var exp = require('express');
 	var app = exp.createServer();
 
-	app.name = 'doodle';
-	app.io = require('./app/core/socket');
-	app.io.init(app.name);
-
 	app.root = __dirname;
-	
+
 	require('./app/core/config')(app, exp);
-	require('./app/socket')(app);
 	require('./app/router')(app);
-	
+	require('./app/modules/doodle-socket');	
+
 	return app;
-	
+
 }
