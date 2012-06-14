@@ -46,11 +46,12 @@ function iniDrawing()
 
 function initSocket()
 {
-	socket = io.connect();
-	socket.on('doodle-status', function (data) {
-		connections = data.connections;
+	socket = io.connect('/doodle');
+	socket.on('status', function (data) {
+		connections = data;		
 		var i=0; for (p in connections) i++;
-		$('#connected').text(i + ' People Currently Connected');
+		var s = i > 1 ? ' are '+i+' People ' : ' is '+i+' Person ';
+		$('#connected').html('There '+s+' Currently Connected');		
 	});	
 	socket.on('draw-data', function (data) {
 		var k = connections[data.id];
