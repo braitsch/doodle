@@ -12,7 +12,7 @@ function gui()
 	}
 	var gui = new dat.GUI({ autoPlace: false });
 	var c1 = gui.addColor(o, 'Line Color');
-		c1.onChange(function(val){ _color = val; });	
+		c1.onChange(function(val){ _color = val; });
 	var s1 = gui.add(o, 'Line Thickness', 1, 10);
 		s1.onChange(function(val){ _stroke = val; });
 	var div = document.getElementById('gui');

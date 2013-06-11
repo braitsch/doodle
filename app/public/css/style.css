@@ -23,8 +23,12 @@ body {
 }
 #main {
   overflow: auto;
-  padding-bottom: 40px;
+  padding-bottom: 59px;
   background-color: #fff;
+}
+#cnvs {
+  position: absolute;
+  top: 40px;
 }
 #gui {
   position: absolute;
@@ -33,14 +37,14 @@ body {
 }
 #footer {
   position: relative;
-  height: 40px;
-  margin-top: -40px;
+  height: 59px;
+  margin-top: -59px;
   background-color: #ddd;
 }
 #credit {
   font-size: 0.9em;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 #nfnd {
   padding: 20px;

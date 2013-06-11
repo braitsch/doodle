@@ -1,25 +1,24 @@
 {
-    "name": "node-socket",
-    "version": "0.0.1",    
-    "description": "Simple Node.js Socket Server",
-    "author": {
-        "name": "Stephen Braitsch",
-        "email": "stephen@quietless.com"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/braitsch/node-socket.git"
-    },
-    "private": true,
-    "dependencies": {
-        "express": "2.5.8",
-        "stylus": ">= 0.0.1",
-        "jade": ">= 0.0.1",
-        "mongodb": ">= 0.1.0",
-        "socket.io": ">= 0.9.6"
-  },
-    "engines": {
-        "node": "0.6.17",
-        "npm":  "1.0.x"
-    }
+	"name": "node-doodle",
+	"version": "0.0.1",
+	"author": {
+		"name": "Stephen Braitsch",
+		"email": "stephen@quietless.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:braitsch/doodle.git"
+	},
+	"private": true,
+	"dependencies": {
+		"express": "3.0.6",
+		"stylus": "0.31.0",
+		"jade": "0.27.7",
+		"mongodb": "1.2.7",
+		"socket.io": "0.9.14"
+	},
+	"engines": {
+		"node": "0.8.14",
+		"npm":  "1.1.65"
+	}
 }

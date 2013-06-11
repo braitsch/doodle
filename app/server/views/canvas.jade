@@ -1,11 +1,18 @@
-#wrap
-    include header
-    #main
-        #gui
-        //input(type='button', value='hello').btn.btn-primary
-        canvas#cnvs(width='1440', height='700')
-include footer
-script(src='/vendor/dat.gui.min.js')
-script(src='/js/gui.js')
-script(src='/js/canvas.js')
-script(src='/vendor/JS3.js')
+
+extends layout
+
+block content
+	#wrap
+		include header
+		#main
+			canvas#cnvs
+			#gui
+	include footer
+
+block scripts
+	script(src='/socket.io/socket.io.js')
+	script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+	script(src='/vendor/dat.gui.min.js')
+	script(src='/js/gui.js')
+	script(src='/js/canvas.js')
+	script(src='/vendor/JS3.js')

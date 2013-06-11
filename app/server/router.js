@@ -5,7 +5,7 @@ module.exports = function(app) {
 
 	app.get('/', canvas);
 	app.get('*', nfnd);
-	
+
 };
 
 function canvas(req, res){

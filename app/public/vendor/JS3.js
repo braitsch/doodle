@@ -18,12 +18,13 @@ function JS3(cnvs)
 {
 		var _root			= this;	
 		var _canvas 		= document.getElementById(cnvs);
+		console.log(_canvas.width, _canvas.height);
 		var _context		= _canvas.getContext("2d");
 		var _children		= [];
 		var _graphics		= [];
 		var _runners		= [];
-		var _tweens			= [];			
-		var _drawClean		= true;				
+		var _tweens			= [];
+		var _drawClean		= true;
 		var _background		= '#ffffff';
 		var _winTitle		= 'My Canvas';
 		var _clickInt		= 0;
