@@ -17,7 +17,7 @@ global.socket.set('transports', [ 'websocket', 'flashsocket', 'htmlfile', 'xhr-p
 app.root = __dirname;
 
 app.configure(function(){
-	app.set('port', 8080);
+	app.set('port', process.env.PORT || 3000);
 	app.set('views', app.root + '/app/server/views');
 	app.set('view engine', 'jade');
 	app.locals.pretty = true;
