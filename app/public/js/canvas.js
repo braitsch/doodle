@@ -53,8 +53,7 @@ function iniDrawing()
 	stage = new JS3('cnvs');
 	stage.interactive = true;
 	stage.drawClean = false;
-	stage.windowTitle = '!!!';
-	stage.radial = ['#ffffff', '#CCCCCC'];
+	stage.windowTitle = 'doodle – made by braitsch';
 	
 	stage.down = start;
 	stage.enter = start;

@@ -82,7 +82,7 @@ function JS3(cnvs)
 			var r = new JS3Runner(func, delay, repeat, onComp);
 			_runners.push(r); return r;
 		}	
-		this.stop = function(func){stopRunner(func);}	
+		this.stop = function(func){stopRunner(func);}
 		this.tween = function(obj, secs, props){
 			if (obj.isTweening) return;
 				obj.isTweening = true;
@@ -91,7 +91,7 @@ function JS3(cnvs)
 		}
 		this.clear = function(){
 			while(_children.length) {_children[0] = null; _children.splice(0, 1);}
-			while(_graphics.length){ _graphics[0] = null; _graphics.splice(0, 1);}				
+			while(_graphics.length){ _graphics[0] = null; _graphics.splice(0, 1);}
 			_children = []; _graphics = []; drawBackground();
 		}
 		this.reset = function(){
@@ -100,14 +100,19 @@ function JS3(cnvs)
 			_tweens = []; _runners = []; this.clear();
 		}		
 		this.save = function(){
-	// save canvas as a png //		
+	// save canvas as a png //
 			var img = _canvas.toDataURL('image/png');
 			var win = window.open('', '_blank', 'width='+_canvas.width+', height='+_canvas.height);
 				win.document.write('<!DOCTYPE html style="padding:0; margin:0"><head><title>'+_winTitle+'</title>');
-	 			win.document.write('</head><body style="background: #f2f2f2; padding:0; margin:0">');
+	 			win.document.write('</head><body style="padding:0; margin:0">');
 	 			win.document.write('<img src="' + img + '"/>');
 	 			win.document.write('</body></html>');
 	 			win.document.close();
+		}
+		
+		function downloadCanvas(link, canvasId, filename) {
+		    link.href = document.getElementById(canvasId).toDataURL();
+		    link.download = filename;
 		}
 		
 	// basic drawing methods //	
@@ -123,7 +128,7 @@ function JS3(cnvs)
 	
 		var addMouseEvents = function()
 		{
-			_canvas.addEventListener("mousedown", onMD);	
+			_canvas.addEventListener("mousedown", onMD);
 			_canvas.addEventListener("mouseup", onMU);
 			_canvas.addEventListener("mousemove", onMM);
 			_canvas.addEventListener("mouseover", onOVR);

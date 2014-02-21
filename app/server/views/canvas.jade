@@ -3,15 +3,26 @@ extends layout
 
 block content
 	#wrap
-		include header
+		#header
+			.fill
+			.content
+				p#connected
+					X People Currently Connected
 		#main
 			canvas#cnvs
 			#gui
-	include footer
+
+	#footer
+		#credit Made by
+			&nbsp;
+			a(href='http://twitter.com/braitsch') braitsch
+			&nbsp;-&nbsp;
+			a(href='http://github.com/braitsch/doodle') Source on Github
+
 
 block scripts
 	script(src='/socket.io/socket.io.js')
 	script(src='/vendor/jquery-2.1.0.min.js')
 	script(src='/vendor/dat.gui.min.js')
+	script(src='/vendor/JS3-0.3.1.js')
 	script(src='/js/canvas.js')
-	script(src='/vendor/JS3.js')
