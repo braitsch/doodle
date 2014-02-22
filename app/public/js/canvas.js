@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 function gui()
 {
-	var _shape = 'Circle';
+	var _shape = 'Line';
 	var _stroke = {
 		color : '#'+Math.floor(Math.random()*16777215).toString(16),
 		alpha : 100,
@@ -68,6 +68,8 @@ function gui()
 
 function iniDrawing()
 {
+	var data = {};
+	
 	stage = new JS3('cnvs');
 	stage.interactive = true;
 	stage.drawClean = false;
@@ -78,12 +80,11 @@ function iniDrawing()
 	stage.up = stop;
 	stage.leave = stop;
 	
-    var data = {};
-	
 	function start(e)
 	{
 		if (stage.mousePressed){
-			x = e.x; y = e.y;
+			data.x1 = e.x;
+			data.y1 = e.y;
 			stage.move = onMouseMove;
 		}
 		window.document.body.style.cursor = 'crosshair';
@@ -99,8 +100,6 @@ function iniDrawing()
 	{
 		data.x2 = e.x;
 		data.y2 = e.y;
-		data.x1 = data.x1 || data.x2;
-		data.y1 = data.y1 || data.y2;
 		data.shape = gui.shape;
 		data.fill = gui.fill;
 		data.stroke = gui.stroke;
