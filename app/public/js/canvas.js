@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 function gui()
 {
-	var _shape = 'Triangle';
+	var _shape = 'Circle';
 	var _stroke = {
 		color : '#'+Math.floor(Math.random()*16777215).toString(16),
 		alpha : 100,
@@ -126,7 +126,7 @@ function iniDrawing()
 var drawLine = function(e)
 {
 	if (e.wiggle == 0){
-		stage.drawLine({x1:e.x1, y1:e.y1, x2:e.x2, y2:e.y2,
+		stage.drawLine({x1:e.x1,	 y1:e.y1, x2:e.x2, y2:e.y2,
 			strokeColor:e.stroke.color, strokeWidth:e.size, alpha:e.stroke.alpha, capStyle:'round'});
 	}	else{
 		var max = (e.wiggle * 10);

@@ -1,3 +1,8 @@
+@font-face
+	font-family: 'Dolce Vita';
+	font-style: normal;
+	src: url('/fonts/Dolce_Vita.ttf')
+
 footer_height = 59px
 
 html, body 
@@ -11,22 +16,27 @@ html, body
 	-o-user-select none
 	user-select none
 
+a
+	color #e8268d
+
 #wrap 
 	min-height 100%
 
 #header
 	width 100%
 	postiton absolute
+	font-family 'Dolce Vita'
+	letter-spacing 1px
 	.fill
 		postiton absolute
 		height 40px
 		background-image url('/img/bkgds/crossword-dk.png')
 	.content
+		top -4px
 		position absolute
-		right 0
+		right 20px
 		text-align right
 		width auto
-		margin -28px 20px 0 10px
 
 #main
 	overflow auto
@@ -46,6 +56,8 @@ html, body
 	position relative
 	height footer_height
 	margin-top - footer_height
+	font-family 'Dolce Vita'
+	letter-spacing 1px
 	background-image url('/img/bkgds/crossword-dk.png')
 	#credit
 		font-size .9em
