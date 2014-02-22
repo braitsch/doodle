@@ -180,3 +180,44 @@ function initSocket()
 		}
 	});
 }
+
+/*
+	automation test
+*/
+
+// var data = {};
+// var pos = {
+// 	x : Math.random()*window.innerWidth,
+// 	y : Math.random()*window.innerHeight,
+// 	dx: 1,
+// 	dy: 1,
+// }
+// setInterval(function(){
+// 	if (pos.x < 0 || pos.x > window.innerWidth) pos.dx*=-1;
+// 	if (pos.y < 0 || pos.y > window.innerHeight) pos.dy*=-1;
+// 	pos.x+=(pos.dx*5);
+// 	pos.y+=(pos.dy*5);
+// 	data.x2 = pos.x;
+// 	data.y2 = pos.y;
+// 	data.x1 = data.x1 || data.x2;
+// 	data.y1 = data.y1 || data.y2;
+// 	data.shape = gui.shape;
+// 	data.fill = gui.fill;
+// 	data.stroke = gui.stroke;
+// 	data.size = gui.size;
+// 	data.wiggle = gui.wiggle;
+// 	if (data.fill.rainbow) data.fill.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+// 	if (data.stroke.rainbow) data.stroke.color = '#'+Math.floor(Math.random()*16777215).toString(16);
+// 	if (data.shape == 'Line'){
+// 		drawLine(data);
+// 	}	else if (gui.shape == 'Circle'){
+// 		drawCircle(data);
+// 	}	else if (gui.shape == 'Square'){
+// 		drawSquare(data);
+// 	}	else if (gui.shape == 'Triangle'){
+// 		drawTriangle(data);
+// 	}
+// 	socket.emit('draw-data', data);
+// 	data.x1 = data.x2;
+// 	data.y1 = data.y2;
+// }, .1);
