@@ -9,7 +9,7 @@ module.exports = function(app) {
 };
 
 function canvas(req, res){
-	res.render('canvas', { title: 'Node Canvas'});
+	res.render('canvas', { title: 'Socket.IO Doodle'});
 }
 
 function nfnd(req, res) {

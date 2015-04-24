@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Dolce Vita';
+  font-style: normal;
+  src: url("/fonts/Dolce_Vita.ttf");
+}
 html,
 body {
   margin: 0;
@@ -10,12 +15,17 @@ body {
   -o-user-select: none;
   user-select: none;
 }
+a {
+  color: #e8268d;
+}
 #wrap {
   min-height: 100%;
 }
 #header {
   width: 100%;
   postiton: absolute;
+  font-family: 'Dolce Vita';
+  letter-spacing: 1px;
 }
 #header .fill {
   postiton: absolute;
@@ -23,11 +33,11 @@ body {
   background-image: url("/img/bkgds/crossword-dk.png");
 }
 #header .content {
+  top: -4px;
   position: absolute;
-  right: 0;
+  right: 20px;
   text-align: right;
   width: auto;
-  margin: -28px 20px 0 10px;
 }
 #main {
   overflow: auto;
@@ -47,6 +57,8 @@ body {
   position: relative;
   height: 59px;
   margin-top: -59px;
+  font-family: 'Dolce Vita';
+  letter-spacing: 1px;
   background-image: url("/img/bkgds/crossword-dk.png");
 }
 #footer #credit {
