@@ -3,7 +3,7 @@
  * JS3 - A Drawing & Tweening API for the JavaScript Canvas
  * Version : 0.3.1
  * Release Date : May 22 2012
- * Documentation : http://js3.quietless.com/
+ * Documentation : http://js3.braitsch.io/
  *
  * Copyright 2012 Stephen Braitsch :: @braitsch
  *

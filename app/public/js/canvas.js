@@ -14,15 +14,17 @@ function gui()
 {
 	var _shape = 'Line';
 	var _stroke = {
-		color : '#'+Math.floor(Math.random()*16777215).toString(16),
+		color : '#'+(Math.random()*0xFFFFFF<<0).toString(16),
 		alpha : 100,
 		rainbow : true
 	}
+	while(_stroke.color.length < 7) _stroke.color += '0';
 	var _fill = {
-		color : '#'+Math.floor(Math.random()*16777215).toString(16),
+		color : '#'+(Math.random()*0xFFFFFF<<0).toString(16),
 		alpha : 100,
 		rainbow : true
 	}
+	while(_fill.color.length < 7) _fill.color += '0';
 	var _size = 25;
 	var _wiggle = 10;
 	var _onSave = function() {};
@@ -157,7 +159,7 @@ var drawTriangle = function(e)
 
 function initSocket()
 {
-	socket = io.connect('/doodle');
+	socket = io.connect(':3000/doodle');
 	socket.on('status', function (data) {
 		connections = data;
 		var i=0; for (p in connections) i++;
