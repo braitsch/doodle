@@ -159,7 +159,7 @@ var drawTriangle = function(e)
 
 function initSocket()
 {
-	socket = io.connect(':3000/doodle');
+	socket = io('/doodle');
 	socket.on('status', function (data) {
 		connections = data;
 		var i=0; for (p in connections) i++;
