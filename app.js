@@ -4,21 +4,16 @@
  * Author :: Stephen Braitsch
  */
 
-var express = require('express');
-var app = express();
-var server  = require('http').createServer(app);
+const express = require('@braitsch/express');
 
-// create the single instance of socket.io that will be shared across all applications //
-global.io = require('socket.io').listen(server);
+const app = express();
 
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/app/server/views');
-app.set('view engine', 'pug');
-app.use(require('stylus').middleware({ src: __dirname + '/app/public' }));
-app.use(express.static(__dirname + '/app/public'));
+express.log('./logs');
 
-require('./app/server/routes')(app);
+const server = express.http(app);
 
-server.listen(app.get('port'), function(){
-	console.log('Express app listening at http://%s:%s', server.address().address, server.address().port);
-});
+global.io = require('socket.io')(server);
+
+express.init(__dirname, app);
+
+express.start(app);
